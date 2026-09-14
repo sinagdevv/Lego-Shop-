@@ -7,12 +7,15 @@ const menu=$('#menuToggle'),nav=$('#navLinks');
 if(menu)menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',open);menu.setAttribute('aria-label',open?'Close menu':'Open menu')});
 $$('.nav-links a').forEach(a=>a.addEventListener('click',()=>{nav?.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
 const image=$('#galleryImage');
-function setImage(src,alt){if(!image)return;image.src=src;image.alt=alt;$$('.thumb').forEach(t=>t.classList.toggle('selected',t.dataset.image===src))}
+const titleEl=$('#productTitle'),crumbEl=$('#breadcrumbProduct'),chosen=$('#variantChosen'),variantList=$('#variantList');
+const nameOverrides={hellokitty:'Hello Kitty',mickeymouse:'Mickey Mouse',minniemouse:'Minnie Mouse',cinnamonroll:'Cinnamoroll',pochaco:'Pochaco'};
+function productName(src){const base=src.split('/').pop().replace(/\.png$/i,'');return nameOverrides[base]||base.charAt(0).toUpperCase()+base.slice(1)}
+function setImage(src,alt){if(!image)return;const name=productName(src),label=name+' Display Set';image.src=src;image.alt=alt||name+' pixel-art collectible brick figure';if(titleEl)titleEl.textContent=label;if(crumbEl)crumbEl.textContent=label;document.title=label+' — BrickByBrick';if(chosen)chosen.textContent=name;$$('.thumb').forEach(t=>t.classList.toggle('selected',t.dataset.image===src));$$('.variant').forEach(v=>{const active=v.dataset.image===src;v.classList.toggle('active',active);v.setAttribute('aria-pressed',active?'true':'false')})}
 $$('.thumb').forEach(t=>t.addEventListener('click',()=>setImage(t.dataset.image,t.dataset.alt)));
-const chosen=$('#variantChosen');
+if(variantList){$$('.thumb').forEach(t=>{const name=productName(t.dataset.image),button=document.createElement('button');button.className='variant';button.type='button';button.dataset.name=name;button.dataset.image=t.dataset.image;button.setAttribute('aria-pressed',t.classList.contains('selected')?'true':'false');button.textContent=name;variantList.appendChild(button)});}
 const currentPrice=$('.price-row>strong'),originalPrice=$('.price-row del'),discountBadge=$('#discountBadge');
 if(currentPrice&&originalPrice&&discountBadge){const current=Number(currentPrice.textContent.replace(/[^\d]/g,'')),original=Number(originalPrice.textContent.replace(/[^\d]/g,''));if(original>current)discountBadge.textContent='SAVE '+Math.round((1-current/original)*100)+'%'}
-$$('.variant').forEach(v=>v.addEventListener('click',()=>{$$('.variant').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});v.classList.add('active');v.setAttribute('aria-pressed','true');if(chosen)chosen.textContent=v.dataset.name;setImage(v.dataset.image,v.dataset.name+' pixel-art collectible brick figure')}));
+$$('.variant').forEach(v=>v.addEventListener('click',()=>setImage(v.dataset.image,v.dataset.name+' pixel-art collectible brick figure')));
 let qty=1;const qtyEl=$('#qtyValue'),down=$('#stepDown'),up=$('#stepUp');
 function renderQty(){if(qtyEl)qtyEl.textContent=qty;if(down)down.disabled=qty<=1;if(up)up.disabled=qty>=12}if(down)down.addEventListener('click',()=>{if(qty>1){qty--;renderQty()}});if(up)up.addEventListener('click',()=>{if(qty<12){qty++;renderQty()}});renderQty();
 let timer;function toast(msg){const t=$('#purchaseToast');if(!t)return;t.textContent=msg;clearTimeout(timer);timer=setTimeout(()=>t.textContent='',2800)}
