@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrickByBrick — Spark Roadster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brick-orange:#E3610F;
+    --brick-orange-dark:#B84A0A;
+    --stud-yellow:#FFC531;
+    --ink-navy:#1C2331;
+    --warm-cream:#FFF3E3;
+    --leaf-green:#2E9E5B;
+    --white:#FFFFFF;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:8px;
+    --font-pixel:'Pixelify Sans', system-ui, sans-serif;
+    --font-body:'Nunito Sans', system-ui, sans-serif;
+    --max-w:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--ink-navy);
+    background:var(--warm-cream);
+    line-height:1.55;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  .wrap{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  h1,h2,h3, .pixel{
+    font-family:var(--font-pixel);
+    letter-spacing:0.3px;
+    line-height:1.35;
+    margin:0;
+  }
+
+  :focus-visible{
+    outline:3px solid var(--brick-orange-dark);
+    outline-offset:3px;
+  }
+
+  /* ---------- Top promo bar ---------- */
+  .topbar{
+    background:var(--ink-navy);
+    color:var(--warm-cream);
+    text-align:center;
+    font-size:0.85rem;
+    font-weight:600;
+    padding:8px 16px;
+  }
+
+  /* ---------- Navbar ---------- */
+  .navbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:var(--warm-cream);
+    border-bottom:3px solid var(--ink-navy);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 24px;
+  }
+  .logo{
+    font-family:var(--font-pixel);
+    font-size:1.1rem;
+    color:var(--brick-orange);
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo-mark{
+    width:22px; height:22px;
+    background:var(--brick-orange);
+    border-radius:5px;
+    position:relative;
+    flex:none;
+  }
+  .logo-mark::before,.logo-mark::after{
+    content:"";
+    position:absolute;
+    width:7px;height:7px;
+    background:var(--stud-yellow);
+    border-radius:50%;
+    top:-4px;
+  }
+  .logo-mark::before{left:2px;}
+  .logo-mark::after{right:2px;}
+
+  .nav-links{
+    display:flex;
+    gap:28px;
+    list-style:none;
+    margin:0; padding:0;
+    font-weight:700;
+  }
+  .nav-links a{
+    text-decoration:none;
+    font-size:0.95rem;
+    padding:6px 2px;
+    border-bottom:3px solid transparent;
+  }
+  .nav-links a:hover{border-bottom-color:var(--brick-orange);}
+
+  .nav-right{display:flex; align-items:center; gap:16px;}
+
+  .cart-btn{
+    position:relative;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+    display:flex;
+  }
+  .cart-badge{
+    position:absolute;
+    top:-4px; right:-6px;
+    background:var(--brick-orange);
+    color:var(--white);
+    font-size:0.68rem;
+    font-weight:800;
+    min-width:18px; height:18px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    padding:0 3px;
+    border:2px solid var(--warm-cream);
+  }
+
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+  }
+  .hamburger span{
+    width:24px; height:3px;
+    background:var(--ink-navy);
+    border-radius:2px;
+  }
+
+  /* ---------- Stud dividers ---------- */
+  .studs{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    padding:14px 0;
+  }
+  .studs span{
+    width:12px; height:12px;
+    border-radius:50%;
+  }
+  .studs.on-cream span{background:var(--stud-yellow);}
+  .studs.on-dark span{background:var(--warm-cream);}
+  .section-navy .studs.on-dark, .section-orange .studs.on-dark{background:var(--ink-navy);}
+  .section-navy{background:var(--ink-navy); color:var(--warm-cream);}
+  .studs.on-navy-bg span{background:var(--warm-cream);}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    font-family:var(--font-pixel);
+    font-size:0.85rem;
+    display:inline-block;
+    text-decoration:none;
+    text-align:center;
+    padding:14px 26px;
+    border-radius:var(--radius-md);
+    border:none;
+    cursor:pointer;
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  .btn-primary{
+    background:var(--brick-orange);
+    color:var(--white);
+    box-shadow:0 6px 0 var(--brick-orange-dark);
+  }
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 7px 0 var(--brick-orange-dark);}
+  .btn-primary:active{
+    transform:translateY(6px);
+    box-shadow:0 0 0 var(--brick-orange-dark);
+  }
+  .btn-secondary{
+    background:var(--warm-cream);
+    color:var(--ink-navy);
+    border:3px solid var(--ink-navy);
+    box-shadow:0 6px 0 var(--ink-navy);
+  }
+  .btn-secondary:hover{transform:translateY(-1px); box-shadow:0 7px 0 var(--ink-navy);}
+  .btn-secondary:active{transform:translateY(6px); box-shadow:0 0 0 var(--ink-navy);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:radial-gradient(circle at 80% 20%, #FFDCB8 0%, var(--warm-cream) 55%);
+    padding:64px 0 40px;
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:48px;
+    align-items:center;
+  }
+  .hero-tag{
+    font-weight:800;
+    color:var(--brick-orange-dark);
+    font-size:0.9rem;
+    margin-bottom:10px;
+  }
+  .hero h1{
+    font-size:2.5rem;
+    color:var(--ink-navy);
+  }
+  .hero-pitch{
+    margin-top:18px;
+    font-size:1.05rem;
+    max-width:46ch;
+  }
+  .hero-ctas{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-top:28px;
+  }
+  .stat-pills{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:34px;
+  }
+  .pill{
+    background:var(--white);
+    border:2px solid var(--ink-navy);
+    border-radius:999px;
+    padding:8px 16px;
+    font-weight:800;
+    font-size:0.85rem;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .hero-art{
+    background:var(--white);
+    border:3px solid var(--ink-navy);
+    border-radius:var(--radius-lg);
+    padding:20px;
+    height:360px;
+  }
+
+  /* ---------- Teaser ---------- */
+  .teaser{padding:36px 0 8px;}
+  .teaser-inner{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:44px;
+    align-items:center;
+  }
+  .teaser-img{
+    background:var(--white);
+    border:3px solid var(--ink-navy);
+    border-radius:var(--radius-lg);
+    padding:16px;
+    height:300px;
+  }
+  .teaser h2{font-size:1.6rem; margin-bottom:12px;}
+  .spec-list{
+    list-style:none;
+    margin:18px 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    font-weight:700;
+    font-size:0.92rem;
+  }
+  .spec-list li{display:flex; gap:10px; align-items:baseline;}
+  .spec-list li::before{
+    content:"";
+    width:8px;height:8px;
+    background:var(--brick-orange);
+    border-radius:2px;
+    flex:none;
+    transform:translateY(-2px);
+  }
+
+  /* ---------- Features ---------- */
+  .features{padding:12px 0 8px;}
+  .features h2{
+    text-align:center;
+    font-size:1.6rem;
+    color:var(--warm-cream);
+    margin-bottom:8px;
+  }
+  .features-sub{
+    text-align:center;
+    color:#C9CEDA;
+    max-width:52ch;
+    margin:0 auto 32px;
+  }
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  .feature-card{
+    background:var(--warm-cream);
+    color:var(--ink-navy);
+    border-radius:var(--radius-md);
+    padding:22px 18px;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 4px 0 rgba(0,0,0,0.15);
+  }
+  .feature-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 12px 20px rgba(0,0,0,0.25);
+  }
+  .feature-icon{
+    width:40px; height:40px;
+    background:var(--stud-yellow);
+    border-radius:var(--radius-sm);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.2rem;
+    margin-bottom:14px;
+  }
+  .feature-card h3{font-size:1.02rem; margin-bottom:6px;}
+  .feature-card p{margin:0; font-size:0.9rem;}
+
+  /* ---------- Trust strip ---------- */
+  .trust{padding:36px 0;}
+  .trust-inner{
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--white);
+    border:3px solid var(--ink-navy);
+    border-radius:var(--radius-lg);
+    padding:26px 32px;
+  }
+  .trust-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:700;
+  }
+  .trust-badge{
+    background:var(--stud-yellow);
+    border-radius:50%;
+    width:44px; height:44px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-pixel);
+    font-size:0.78rem;
+    flex:none;
+  }
+
+  /* ---------- CTA banner ---------- */
+  .cta-banner{
+    background:var(--brick-orange);
+    color:var(--white);
+    border-radius:var(--radius-lg);
+    margin:8px auto 40px;
+    padding:36px 32px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .cta-banner h2{font-size:1.4rem;}
+  .cta-banner .price{font-size:1.1rem; font-weight:800; margin-top:6px;}
+  .cta-banner .btn-secondary{
+    background:var(--warm-cream);
+    color:var(--brick-orange-dark);
+    border-color:var(--ink-navy);
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--ink-navy);
+    color:var(--warm-cream);
+    padding:48px 0 24px;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1.3fr;
+    gap:32px;
+  }
+  .footer-grid h4{
+    font-family:var(--font-pixel);
+    font-size:0.85rem;
+    color:var(--stud-yellow);
+    margin:0 0 14px;
+  }
+  .footer-grid p{font-size:0.9rem; color:#C9CEDA; max-width:32ch;}
+  .footer-links{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .footer-links a{text-decoration:none; font-size:0.9rem; color:#E8E4DC;}
+  .footer-links a:hover{color:var(--stud-yellow);}
+
+  .signup-form{display:flex; gap:8px; margin-top:6px;}
+  .signup-form input{
+    flex:1;
+    padding:10px 12px;
+    border-radius:var(--radius-sm);
+    border:2px solid #3A4257;
+    background:#252D40;
+    color:var(--warm-cream);
+    font-family:var(--font-body);
+    font-size:0.9rem;
+  }
+  .signup-form input::placeholder{color:#8890A3;}
+  .signup-form button{
+    background:var(--brick-orange);
+    color:var(--white);
+    border:none;
+    border-radius:var(--radius-sm);
+    padding:10px 16px;
+    font-weight:800;
+    cursor:pointer;
+    font-size:0.85rem;
+  }
+  .form-msg{font-size:0.82rem; margin-top:8px; min-height:1.1em;}
+  .form-msg.success{color:var(--leaf-green); font-weight:700;}
+  .form-msg.error{color:#FF8B7A; font-weight:700;}
+
+  .footer-bottom{
+    border-top:1px solid #333B4E;
+    margin-top:36px;
+    padding-top:20px;
+    font-size:0.8rem;
+    color:#8890A3;
+    text-align:center;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero-inner, .teaser-inner{grid-template-columns:1fr;}
+    .hero-art{order:-1;}
+    .feature-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+
+  @media (max-width:680px){
+    .nav-links{
+      position:absolute;
+      top:100%; left:0; right:0;
+      background:var(--warm-cream);
+      border-bottom:3px solid var(--ink-navy);
+      flex-direction:column;
+      gap:0;
+      padding:8px 24px 16px;
+      display:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{display:block; padding:12px 0;}
+    .hamburger{display:flex;}
+    .hero h1{font-size:1.9rem;}
+    .feature-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .cta-banner{flex-direction:column; align-items:flex-start;}
+    .signup-form{flex-direction:column;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">Free shipping, no minimum — every order, every time.</div>
+
+<nav class="navbar">
+  <div class="nav-inner wrap">
+    <a href="#" class="logo"><span class="logo-mark"></span>BrickByBrick</a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#top">Home</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="#features">Features</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <button class="cart-btn" id="cartBtn" aria-label="View cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1C2331" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"></path>
+        </svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div>
+      <div class="hero-tag">SPARK COLLECTION</div>
+      <h1>Build the Spark Roadster, brick by brick.</h1>
+      <p class="hero-pitch">542 snap-fit pieces, zero glue, and a numbered build book that turns a quiet afternoon into a finished roadster with real rolling wheels.</p>
+      <div class="hero-ctas">
+        <a href="product.html" class="btn btn-primary">Shop this set</a>
+        <a href="#description" class="btn btn-secondary">See what's inside</a>
+      </div>
+      <div class="stat-pills">
+        <span class="pill">⭐ 4.8 rating</span>
+        <span class="pill">🧩 542 pieces</span>
+        <span class="pill">📦 15,000+ sold</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="https://images.unsplash.com/photo-1637063868743-71757b4770c3?auto=format&fit=crop&w=900&q=80"
+           alt="Blue brick roadster model, fully built, sitting on a table"
+           style="width:100%; height:100%; object-fit:cover; border-radius:12px; display:block;">
+    </div>
+  </div>
+</header>
+
+<div class="studs on-cream"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<section class="teaser" id="description">
+  <div class="wrap teaser-inner">
+    <div class="teaser-img">
+      <img src="https://images.unsplash.com/photo-1560961911-293cfd783727?auto=format&fit=crop&w=700&q=80"
+           alt="Close-up of loose yellow snap-fit brick pieces"
+           style="width:100%; height:100%; object-fit:cover; border-radius:12px; display:block;">
+    </div>
+    <div>
+      <h2>What you're building</h2>
+      <p>The Spark Roadster reimagines a classic three-wheeler in 542 chunky, snap-fit bricks — no glue, no fuss. Six numbered bags and a stepped instruction book turn the build into a weekend ritual, not a chore. Once it's done, working steering and rolling axles make it just as fun to play with.</p>
+      <ul class="spec-list">
+        <li>542 pieces</li>
+        <li>9.4" long × 4.2" tall when built</li>
+        <li>Model No. SPK-542</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="studs on-cream"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<section class="features section-navy" id="features">
+  <div class="wrap" style="padding:44px 24px 52px;">
+    <h2>Made to snap together, not fall apart</h2>
+    <p class="features-sub">Every Spark Collection set follows the same build promise, from the first stud to the last.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🧷</div>
+        <h3>Snap-fit assembly</h3>
+        <p>Every piece clicks into place by hand — no glue, no tools, no mess.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Comes boxed</h3>
+        <p>Ships in a padded, display-ready box that's gift-ready straight off the shelf.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔢</div>
+        <h3>Numbered build stages</h3>
+        <p>Six numbered bags guide the build stage by stage, so you always know what's next.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>Free shipping</h3>
+        <p>Every order ships free, no minimum spend and no fine print.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="studs on-cream"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<section class="trust">
+  <div class="wrap">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <span class="trust-badge">4.8★</span>
+        <span>1,200 builder reviews</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-badge">15K+</span>
+        <span>sets built and counting</span>
+      </div>
+      <div class="trust-item">
+        <span>As seen in the Spark Collection</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="cta-banner">
+    <div>
+      <h2>Ready to start building?</h2>
+      <div class="price">$34.99 — while the Spark Collection lasts</div>
+    </div>
+    <a href="product.html" class="btn btn-secondary">Shop this set</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <a href="#" class="logo" style="margin-bottom:12px;"><span class="logo-mark"></span>BrickByBrick</a>
+      <p>Snap-fit building sets for people who never grew out of the toy aisle.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul class="footer-links">
+        <li><a href="#top">Home</a></li>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="#features">Features</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <ul class="footer-links">
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Get first dibs on new sets</h4>
+      <form class="signup-form" id="signupForm" novalidate>
+        <label for="signupEmail" class="sr-only" style="position:absolute; left:-9999px;">Email address</label>
+        <input type="email" id="signupEmail" placeholder="you@email.com" autocomplete="email">
+        <button type="submit">Sign up</button>
+      </form>
+      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 BrickByBrick. All rights reserved.</div>
+</footer>
+
+<script>
+  // Mobile hamburger menu
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburgerBtn.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Cart badge — reads a shared count so it can stay in sync with the product page
+  const CART_KEY = 'bbb_cart_count';
+  const cartBadge = document.getElementById('cartBadge');
+
+  function renderCartCount() {
+    const count = parseInt(localStorage.getItem(CART_KEY) || '0', 10);
+    cartBadge.textContent = count;
+  }
+  renderCartCount();
+  // Picks up changes made on the product page (or another tab) without a reload
+  window.addEventListener('storage', (e) => {
+    if (e.key === CART_KEY) renderCartCount();
+  });
+
+  // Footer email signup validation
+  const signupForm = document.getElementById('signupForm');
+  const signupEmail = document.getElementById('signupEmail');
+  const formMsg = document.getElementById('formMsg');
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const value = signupEmail.value.trim();
+    if (!emailPattern.test(value)) {
+      formMsg.textContent = 'Please enter a valid email address.';
+      formMsg.className = 'form-msg error';
+      return;
+    }
+    formMsg.textContent = "You're on the list!";
+    formMsg.className = 'form-msg success';
+    signupForm.reset();
+  });
+</script>
+
+</body>
+</html>
