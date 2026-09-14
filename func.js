@@ -1,156 +1,21 @@
-// =============================================================
-// Cart count — shared across landing.html and index.html via localStorage
-// =============================================================
-const CART_KEY = 'bbb_cart_count';
-
-function getCartCount(){
-  return parseInt(localStorage.getItem(CART_KEY) || '0', 10);
-}
-
-function setCartCount(value){
-  localStorage.setItem(CART_KEY, String(value));
-  document.getElementById('cartCount').textContent = value;
-}
-
-setCartCount(getCartCount());
-
-// Keep cart badge in sync if it changes in another tab/page
-window.addEventListener('storage', (e) => {
-  if (e.key === CART_KEY) {
-    document.getElementById('cartCount').textContent = getCartCount();
-  }
-});
-
-// =============================================================
-// Mobile hamburger menu
-// =============================================================
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-
-hamburger.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('is-open');
-  hamburger.setAttribute('aria-expanded', String(isOpen));
-});
-
-// =============================================================
-// Variant selector
-// =============================================================
-const swatches = document.querySelectorAll('.swatch');
-const variantChosen = document.getElementById('variantChosen');
-
-swatches.forEach((swatch) => {
-  swatch.addEventListener('click', () => {
-    swatches.forEach((s) => {
-      s.classList.remove('is-selected');
-      s.setAttribute('aria-pressed', 'false');
-    });
-    swatch.classList.add('is-selected');
-    swatch.setAttribute('aria-pressed', 'true');
-    variantChosen.textContent = swatch.dataset.name;
-  });
-});
-
-// =============================================================
-// Quantity stepper
-// =============================================================
-const MIN_QTY = 2;
-const MAX_QTY = 8; // matches stock count
-
-let qty = MIN_QTY;
-const qtyValue = document.getElementById('qtyValue');
-const stepDown = document.getElementById('stepDown');
-const stepUp = document.getElementById('stepUp');
-const stockText = document.getElementById('stockText');
-
-function renderQty(){
-  qtyValue.textContent = qty;
-  stepDown.disabled = qty <= MIN_QTY;
-  stepUp.disabled = qty >= MAX_QTY;
-  stockText.textContent = `${MAX_QTY} sets in stock`;
-}
-
-stepDown.addEventListener('click', () => {
-  if (qty > MIN_QTY) {
-    qty -= 1;
-    renderQty();
-  }
-});
-
-stepUp.addEventListener('click', () => {
-  if (qty < MAX_QTY) {
-    qty += 1;
-    renderQty();
-  }
-});
-
-renderQty();
-
-// =============================================================
-// Add to cart / Buy now
-// =============================================================
-const addToCartBtn = document.getElementById('addToCartBtn');
-const buyNowBtn = document.getElementById('buyNowBtn');
-const purchaseToast = document.getElementById('purchaseToast');
-
-let toastTimer = null;
-
-function showToast(message){
-  purchaseToast.textContent = message;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    purchaseToast.textContent = '';
-  }, 3000);
-}
-
-addToCartBtn.addEventListener('click', () => {
-  setCartCount(getCartCount() + qty);
-  showToast(`Added ${qty} to cart.`);
-});
-
-buyNowBtn.addEventListener('click', () => {
-  showToast('Proceeding to checkout…');
-});
-
-// =============================================================
-// Accordion — only one section open at a time
-// =============================================================
-const accordionTriggers = document.querySelectorAll('.accordion__trigger');
-
-accordionTriggers.forEach((trigger) => {
-  trigger.addEventListener('click', () => {
-    const panel = document.getElementById(trigger.getAttribute('aria-controls'));
-    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
-
-    accordionTriggers.forEach((t) => {
-      t.setAttribute('aria-expanded', 'false');
-      document.getElementById(t.getAttribute('aria-controls')).style.maxHeight = null;
-    });
-
-    if (!isOpen) {
-      trigger.setAttribute('aria-expanded', 'true');
-      panel.style.maxHeight = panel.scrollHeight + 'px';
-    }
-  });
-});
-
-// =============================================================
-// Footer email signup — format validation, no backend
-// =============================================================
-const signupForm = document.getElementById('signupForm');
-const signupEmail = document.getElementById('signupEmail');
-const signupMsg = document.getElementById('signupMsg');
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-signupForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const value = signupEmail.value.trim();
-
-  if (EMAIL_PATTERN.test(value)) {
-    signupMsg.textContent = "You're on the list!";
-    signupMsg.style.color = 'var(--ink-navy)';
-    signupForm.reset();
-  } else {
-    signupMsg.textContent = 'Enter a valid email address.';
-    signupMsg.style.color = '#5c1a00';
-  }
-});
+const CART_KEY='brickbybrick_cart_count';
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+function cartCount(){return Number(localStorage.getItem(CART_KEY)||0)}
+function renderCart(){const n=cartCount();const el=$('#cartCount');if(el)el.textContent=n;const btn=$('.cart');if(btn)btn.setAttribute('aria-label','Cart, '+n+' items')}
+renderCart();window.addEventListener('storage',renderCart);
+const menu=$('#menuToggle'),nav=$('#navLinks');
+if(menu)menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',open);menu.setAttribute('aria-label',open?'Close menu':'Open menu')});
+$$('.nav-links a').forEach(a=>a.addEventListener('click',()=>{nav?.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
+const image=$('#galleryImage');
+function setImage(src,alt){if(!image)return;image.src=src;image.alt=alt;$$('.thumb').forEach(t=>t.classList.toggle('selected',t.dataset.image===src))}
+$$('.thumb').forEach(t=>t.addEventListener('click',()=>setImage(t.dataset.image,t.dataset.alt)));
+const chosen=$('#variantChosen');
+const currentPrice=$('.price-row>strong'),originalPrice=$('.price-row del'),discountBadge=$('#discountBadge');
+if(currentPrice&&originalPrice&&discountBadge){const current=Number(currentPrice.textContent.replace(/[^\d]/g,'')),original=Number(originalPrice.textContent.replace(/[^\d]/g,''));if(original>current)discountBadge.textContent='SAVE '+Math.round((1-current/original)*100)+'%'}
+$$('.variant').forEach(v=>v.addEventListener('click',()=>{$$('.variant').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});v.classList.add('active');v.setAttribute('aria-pressed','true');if(chosen)chosen.textContent=v.dataset.name;setImage(v.dataset.image,v.dataset.name+' pixel-art collectible brick figure')}));
+let qty=1;const qtyEl=$('#qtyValue'),down=$('#stepDown'),up=$('#stepUp');
+function renderQty(){if(qtyEl)qtyEl.textContent=qty;if(down)down.disabled=qty<=1;if(up)up.disabled=qty>=12}if(down)down.addEventListener('click',()=>{if(qty>1){qty--;renderQty()}});if(up)up.addEventListener('click',()=>{if(qty<12){qty++;renderQty()}});renderQty();
+let timer;function toast(msg){const t=$('#purchaseToast');if(!t)return;t.textContent=msg;clearTimeout(timer);timer=setTimeout(()=>t.textContent='',2800)}
+const add=$('#addToCartBtn');if(add)add.addEventListener('click',()=>{localStorage.setItem(CART_KEY,String(cartCount()+qty));renderCart();toast('Added to cart!')});const buy=$('#buyNowBtn');if(buy)buy.addEventListener('click',()=>toast('Proceeding to checkout…'));
+$$('.accordion-trigger').forEach(trigger=>trigger.addEventListener('click',()=>{const panel=document.getElementById(trigger.getAttribute('aria-controls')),open=trigger.getAttribute('aria-expanded')==='true';$$('.accordion-trigger').forEach(t=>{t.setAttribute('aria-expanded','false');const p=document.getElementById(t.getAttribute('aria-controls'));if(p)p.style.maxHeight=null});if(!open){trigger.setAttribute('aria-expanded','true');panel.style.maxHeight=panel.scrollHeight+'px'}}));
+const form=$('#signupForm');if(form)form.addEventListener('submit',e=>{e.preventDefault();const input=$('#signupEmail'),msg=$('#signupMsg');if(input.checkValidity()){msg.textContent="You're on the list!";input.value=''}else{msg.textContent='Enter a valid email address.';input.focus()}});
