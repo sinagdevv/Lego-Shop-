@@ -165,13 +165,14 @@ function renderGoogleSignInElements() {
 
   if (navContainer) {
     navContainer.innerHTML = '';
+    const isMobile = window.innerWidth <= 640;
     try {
       window.google.accounts.id.renderButton(navContainer, {
         theme: 'outline',
-        size: 'medium',
+        size: isMobile ? 'small' : 'medium',
         type: 'standard',
         shape: 'rectangular',
-        text: 'signin_with',
+        text: isMobile ? 'signin' : 'signin_with',
         logo_alignment: 'left',
         locale: 'en'
       });
@@ -360,8 +361,50 @@ function createAuthModalDOM() {
   });
 }
 
+// Mobile navigation drawer toggle for all pages
+function initMobileMenu() {
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (menuToggle && navLinks && !menuToggle.dataset.menuBound) {
+    menuToggle.dataset.menuBound = 'true';
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+      menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open menu');
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !menuToggle.contains(e.target) && navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open menu');
+      }
+    });
+  }
+}
+
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
   initGoogleIdentity();
   renderAuthUI();
+  initMobileMenu();
 });
+
+// Re-render GIS button if window crosses mobile breakpoint
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (!isAuthenticated()) {
+      renderGoogleSignInElements();
+    }
+  }, 250);
+});
+
