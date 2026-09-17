@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Complete your BrickByBrick collectible order with cash on delivery and free shipping.">
+  <title>Checkout — BrickByBrick</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body data-page="checkout">
+  <div class="promo">Free shipping, no minimum • Cash on Delivery available nationwide</div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="landing.html" aria-label="BrickByBrick home">
+        <span class="brand-mark">B</span>
+        <span>BRICK<span>BY</span>BRICK</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="landing.html">Home</a>
+        <a href="index.html">Product</a>
+        <a href="landing.html#features">Features</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="cart" type="button" aria-label="Cart, 0 items">
+          <span aria-hidden="true">▱</span>
+          <b id="cartCount">0</b>
+        </button>
+        <div id="navAuthSlot" class="nav-auth-slot"></div>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="checkout-page-content">
+    <div class="container breadcrumb">
+      <a href="landing.html">Home</a>
+      <span>›</span>
+      <a href="index.html">Product</a>
+      <span>›</span>
+      <strong>Checkout</strong>
+    </div>
+
+    <section class="container checkout-section">
+      <div class="checkout-layout">
+        <!-- LEFT SIDE: Contact & Shipping Form -->
+        <div class="checkout-main">
+          <div class="checkout-header-title">
+            <p class="kicker">FINAL STEP</p>
+            <h1>Complete Your Order</h1>
+          </div>
+
+          <div id="checkoutAuthNotice" class="checkout-auth-banner"></div>
+
+          <form id="checkoutForm" class="checkout-form" novalidate>
+            <!-- 1. Contact Information -->
+            <fieldset class="checkout-fieldset">
+              <legend class="fieldset-legend">
+                <span class="legend-num">1</span> Contact Information
+              </legend>
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label for="custName">Full Name <span class="req">*</span></label>
+                  <input type="text" id="custName" name="custName" placeholder="e.g. Juan dela Cruz" autocomplete="name" required maxlength="100">
+                  <span class="field-error" id="custNameError" role="alert"></span>
+                </div>
+                <div class="form-group full-width">
+                  <label for="custEmail">Google Email Address <span class="req">*</span></label>
+                  <input type="email" id="custEmail" name="custEmail" placeholder="you@gmail.com" autocomplete="email" required maxlength="120">
+                  <span class="field-help">Order updates and confirmation will be sent here.</span>
+                  <span class="field-error" id="custEmailError" role="alert"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- 2. Shipping Address -->
+            <fieldset class="checkout-fieldset">
+              <legend class="fieldset-legend">
+                <span class="legend-num">2</span> Shipping Information
+              </legend>
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label for="custPhone">Mobile Phone Number <span class="req">*</span></label>
+                  <input type="tel" id="custPhone" name="custPhone" placeholder="0917 123 4567" autocomplete="tel" required maxlength="30">
+                  <span class="field-help">For courier delivery updates and rider contact.</span>
+                  <span class="field-error" id="custPhoneError" role="alert"></span>
+                </div>
+                <div class="form-group full-width">
+                  <label for="custStreet">Street Address / House No. / Building <span class="req">*</span></label>
+                  <input type="text" id="custStreet" name="custStreet" placeholder="e.g. Unit 4B, 123 Brickstone St." autocomplete="street-address" required maxlength="250">
+                  <span class="field-error" id="custStreetError" role="alert"></span>
+                </div>
+                <div class="form-group half-width">
+                  <label for="custBarangay">Barangay <span class="req">*</span></label>
+                  <input type="text" id="custBarangay" name="custBarangay" placeholder="e.g. Brgy. San Antonio" required maxlength="100">
+                  <span class="field-error" id="custBarangayError" role="alert"></span>
+                </div>
+                <div class="form-group half-width">
+                  <label for="custCity">City / Municipality <span class="req">*</span></label>
+                  <input type="text" id="custCity" name="custCity" placeholder="e.g. Pasig City" autocomplete="address-level2" required maxlength="100">
+                  <span class="field-error" id="custCityError" role="alert"></span>
+                </div>
+                <div class="form-group half-width">
+                  <label for="custProvince">Province <span class="req">*</span></label>
+                  <input type="text" id="custProvince" name="custProvince" placeholder="e.g. Metro Manila" autocomplete="address-level1" required maxlength="100">
+                  <span class="field-error" id="custProvinceError" role="alert"></span>
+                </div>
+                <div class="form-group half-width">
+                  <label for="custPostalCode">Postal / ZIP Code <span class="req">*</span></label>
+                  <input type="text" id="custPostalCode" name="custPostalCode" placeholder="e.g. 1600" autocomplete="postal-code" required maxlength="20">
+                  <span class="field-error" id="custPostalCodeError" role="alert"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- 3. Payment Method -->
+            <fieldset class="checkout-fieldset">
+              <legend class="fieldset-legend">
+                <span class="legend-num">3</span> Payment Method
+              </legend>
+              <div class="payment-options">
+                <label class="payment-card selected" for="paymentCod">
+                  <input type="radio" id="paymentCod" name="paymentMethod" value="Cash on Delivery" checked>
+                  <div class="payment-card-content">
+                    <div class="payment-card-title">
+                      <span class="payment-icon">💵</span>
+                      <strong>Cash on Delivery (COD)</strong>
+                      <span class="badge-free">ZERO RISK</span>
+                    </div>
+                    <p class="payment-card-desc">Pay in cash directly to the courier upon parcel arrival. No online card required.</p>
+                  </div>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Global Error Display -->
+            <div id="checkoutGlobalError" class="checkout-global-error" role="alert"></div>
+
+            <!-- Submit Button with Spinner -->
+            <div class="checkout-actions">
+              <button type="submit" class="button primary checkout-submit-btn" id="placeOrderBtn">
+                <span class="btn-spinner hidden" id="placeOrderSpinner" aria-hidden="true"></span>
+                <span id="placeOrderText">PLACE ORDER</span>
+              </button>
+              <p class="checkout-security-note">🔒 By placing your order, your build reservation is recorded in our verified registry.</p>
+            </div>
+          </form>
+        </div>
+
+        <!-- RIGHT SIDE: Order Summary -->
+        <aside class="checkout-sidebar" aria-label="Order Summary">
+          <div class="order-summary-card pixel-frame">
+            <div class="summary-header">
+              <h2>ORDER SUMMARY</h2>
+            </div>
+            
+            <div id="checkoutItemsList" class="summary-items-list">
+              <!-- Dynamically populated -->
+            </div>
+
+            <div class="summary-totals">
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <strong id="checkoutSubtotal">₱0</strong>
+              </div>
+              <div class="summary-row">
+                <span>Shipping</span>
+                <span class="free-shipping-tag">FREE</span>
+              </div>
+              <hr class="summary-divider">
+              <div class="summary-row total-row">
+                <span>TOTAL</span>
+                <strong id="checkoutTotal">₱0</strong>
+              </div>
+            </div>
+
+            <div class="summary-perks">
+              <div class="perk-item">
+                <span class="perk-icon">✦</span>
+                <div>
+                  <strong>600 Snap-Fit Bricks</strong>
+                  <span>Numbered bags included</span>
+                </div>
+              </div>
+              <div class="perk-item">
+                <span class="perk-icon">🚚</span>
+                <div>
+                  <strong>Free Nationwide Shipping</strong>
+                  <span>Direct to your doorstep</span>
+                </div>
+              </div>
+              <div class="perk-item">
+                <span class="perk-icon">⊞</span>
+                <div>
+                  <strong>Display Base Included</strong>
+                  <span>Ready for any desk or shelf</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="landing.html">
+          <span class="brand-mark">B</span>
+          <span>BRICK<span>BY</span>BRICK</span>
+        </a>
+        <p>Collectible builds for curious hands and happy shelves.</p>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <a href="landing.html">Home</a>
+        <a href="index.html">Product</a>
+        <a href="landing.html#features">Features</a>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <a href="index.html#shipping">Shipping &amp; returns</a>
+        <a href="index.html#care">Care instructions</a>
+        <a href="mailto:hello@brickbybrick.ph">Contact us</a>
+      </div>
+      <div>
+        <h3>Build tips in your inbox</h3>
+        <form id="signupForm" novalidate>
+          <label class="sr-only" for="signupEmail">Email address</label>
+          <input id="signupEmail" type="email" placeholder="you@email.com" required>
+          <button class="button dark" type="submit">Sign up</button>
+        </form>
+        <p id="signupMsg" class="form-message" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="copyright">© 2026 BrickByBrick. Build your world, brick by brick.</p>
+  </footer>
+
+  <script src="products.js?v=2"></script>
+  <script src="auth.js?v=2"></script>
+  <script src="cart.js?v=2"></script>
+  <script src="checkout.js?v=2"></script>
+</body>
+</html>

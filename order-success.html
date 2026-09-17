@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BrickByBrick order confirmed. Thank you for your collectible build order.">
+  <title>Order Confirmed — BrickByBrick</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body data-page="order-success">
+  <div class="promo">Order received • Cash on delivery confirmation sent</div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="landing.html" aria-label="BrickByBrick home">
+        <span class="brand-mark">B</span>
+        <span>BRICK<span>BY</span>BRICK</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="landing.html">Home</a>
+        <a href="index.html">Product</a>
+        <a href="landing.html#features">Features</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="cart" type="button" aria-label="Cart, 0 items">
+          <span aria-hidden="true">▱</span>
+          <b id="cartCount">0</b>
+        </button>
+        <div id="navAuthSlot" class="nav-auth-slot"></div>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="success-page-content">
+    <div class="container success-container">
+      <div class="success-card pixel-frame">
+        <div class="success-stud-row">
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+
+        <div class="success-icon-badge">✓</div>
+        <p class="kicker">ORDER PLACED</p>
+        <h1 class="success-title">ORDER RECEIVED</h1>
+        <p class="success-greeting" id="successGreeting">Thank you for your order!</p>
+        
+        <p class="success-sub">We've received your build reservation and it is currently waiting for confirmation. <strong>We'll email you whenever your order status changes.</strong></p>
+
+        <div class="order-receipt-box">
+          <div class="receipt-row">
+            <span class="receipt-label">Order Number</span>
+            <strong class="receipt-val order-num-highlight" id="receiptOrderId">BBB-20260918-A4X29Q</strong>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Order Status</span>
+            <span class="order-status-badge status-pending" id="receiptStatus">⏳ Pending</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Payment Method</span>
+            <strong class="receipt-val" id="receiptPayment">Cash on Delivery</strong>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Shipping</span>
+            <strong class="receipt-val highlight-free">FREE (Nationwide)</strong>
+          </div>
+          <div class="receipt-divider"></div>
+          <div class="receipt-row total-highlight">
+            <span class="receipt-label">Total Amount</span>
+            <strong class="receipt-val" id="receiptTotal">₱899</strong>
+          </div>
+        </div>
+
+        <!-- Ordered Items Breakdown -->
+        <div class="success-items-section" id="successItemsSection">
+          <h3>Your Reserved Builds</h3>
+          <div class="success-items-grid" id="successItemsList">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Shipping Destination Summary -->
+        <div class="shipping-destination-box" id="shippingDestinationBox">
+          <h4>Delivery Destination</h4>
+          <p id="destinationAddress" class="destination-text">Standard Courier Delivery</p>
+        </div>
+
+        <div class="success-actions">
+          <a href="orders.html" class="button primary">View My Orders</a>
+          <a href="index.html" class="button outline">Continue Shopping</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="landing.html">
+          <span class="brand-mark">B</span>
+          <span>BRICK<span>BY</span>BRICK</span>
+        </a>
+        <p>Collectible builds for curious hands and happy shelves.</p>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <a href="landing.html">Home</a>
+        <a href="index.html">Product</a>
+        <a href="landing.html#features">Features</a>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <a href="index.html#shipping">Shipping &amp; returns</a>
+        <a href="index.html#care">Care instructions</a>
+        <a href="mailto:hello@brickbybrick.ph">Contact us</a>
+      </div>
+      <div>
+        <h3>Build tips in your inbox</h3>
+        <form id="signupForm" novalidate>
+          <label class="sr-only" for="signupEmail">Email address</label>
+          <input id="signupEmail" type="email" placeholder="you@email.com" required>
+          <button class="button dark" type="submit">Sign up</button>
+        </form>
+        <p id="signupMsg" class="form-message" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="copyright">© 2026 BrickByBrick. Build your world, brick by brick.</p>
+  </footer>
+
+  <script src="products.js?v=2"></script>
+  <script src="auth.js?v=2"></script>
+  <script src="cart.js?v=2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Extract order ID from query params or localStorage
+      const params = new URLSearchParams(window.location.search);
+      const paramOrderId = params.get('orderId');
+
+      let lastOrder = null;
+      try {
+        const raw = localStorage.getItem('brickbybrick_last_order');
+        if (raw) lastOrder = JSON.parse(raw);
+      } catch (e) {
+        console.error('Error reading last order:', e);
+      }
+
+      const orderId = paramOrderId || lastOrder?.orderId || 'BBB-' + Date.now();
+      const user = getCurrentUser();
+      const firstName = user?.firstName || lastOrder?.customer?.name?.split(' ')[0] || 'Builder';
+
+      const greetingEl = document.getElementById('successGreeting');
+      if (greetingEl) greetingEl.textContent = `Thank you, ${firstName}!`;
+
+      const orderIdEl = document.getElementById('receiptOrderId');
+      if (orderIdEl) orderIdEl.textContent = orderId;
+
+      const paymentEl = document.getElementById('receiptPayment');
+      if (paymentEl && lastOrder?.paymentMethod) {
+        paymentEl.textContent = lastOrder.paymentMethod;
+      }
+
+      const totalEl = document.getElementById('receiptTotal');
+      if (totalEl && lastOrder?.total) {
+        totalEl.textContent = formatPrice(lastOrder.total);
+      }
+
+      const itemsListEl = document.getElementById('successItemsList');
+      if (itemsListEl && lastOrder?.items && lastOrder.items.length > 0) {
+        let html = '';
+        lastOrder.items.forEach(item => {
+          const prod = getProductById(item.character || item.id);
+          const imgSrc = item.image || prod?.image || 'images/kuromi.png';
+          html += `
+            <div class="success-item-card pixel-frame">
+              <div class="success-item-thumb">
+                <img src="${imgSrc}" alt="${item.character}">
+              </div>
+              <div class="success-item-meta">
+                <strong>${item.character} Display Set</strong>
+                <span>Quantity: ${item.quantity}</span>
+                <span class="success-item-cost">${formatPrice((item.unitPrice || 899) * item.quantity)}</span>
+              </div>
+            </div>
+          `;
+        });
+        itemsListEl.innerHTML = html;
+      }
+
+      const destEl = document.getElementById('destinationAddress');
+      if (destEl && lastOrder?.shipping) {
+        const s = lastOrder.shipping;
+        const fullAddr = [s.street, s.barangay, s.city, s.province, s.postalCode].filter(Boolean).join(', ');
+        destEl.textContent = `${lastOrder.customer?.name || firstName} • ${s.phone || ''}\n${fullAddr}`;
+      }
+    });
+  </script>
+</body>
+</html>

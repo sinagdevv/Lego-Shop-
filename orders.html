@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Track your BrickByBrick collectible build orders and live shipment status.">
+  <title>My Orders — BrickByBrick</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body data-page="orders">
+  <div class="promo">Track your builds • Live status sync with Google Sheets</div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="landing.html" aria-label="BrickByBrick home">
+        <span class="brand-mark">B</span>
+        <span>BRICK<span>BY</span>BRICK</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="landing.html">Home</a>
+        <a href="index.html">Product</a>
+        <a href="landing.html#features">Features</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="cart" type="button" aria-label="Cart, 0 items">
+          <span aria-hidden="true">▱</span>
+          <b id="cartCount">0</b>
+        </button>
+        <div id="navAuthSlot" class="nav-auth-slot"></div>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="orders-page-content">
+    <div class="container breadcrumb">
+      <a href="landing.html">Home</a>
+      <span>›</span>
+      <a href="index.html">Product</a>
+      <span>›</span>
+      <strong>My Orders</strong>
+    </div>
+
+    <section class="container orders-section">
+      <div class="orders-header-row">
+        <div>
+          <p class="kicker">ORDER HISTORY</p>
+          <h1>My Build Orders</h1>
+          <p class="orders-subtext">Track your parcel progress from workshop assembly to doorstep delivery.</p>
+        </div>
+        <button type="button" class="button outline small-btn refresh-btn" onclick="loadCustomerOrders()">
+          ↻ Refresh Status
+        </button>
+      </div>
+
+      <!-- Auth Required Box (Shown if not logged in) -->
+      <div id="ordersAuthPrompt" class="orders-auth-card pixel-frame hidden">
+        <div class="auth-card-mark">🔒</div>
+        <h2>Sign In to View Your Orders</h2>
+        <p>Please sign in with your Google account to access your personal order tracking and historical purchases.</p>
+        <button type="button" class="button primary" id="ordersLoginBtn">
+          Sign In with Google
+        </button>
+      </div>
+
+      <!-- Empty Orders Box (Shown if logged in but zero orders) -->
+      <div id="ordersEmptyState" class="orders-empty-card pixel-frame hidden">
+        <div class="empty-icon">▦</div>
+        <h2>No Orders Yet</h2>
+        <p>You haven't placed any collectible build orders yet. Build your world, brick by brick!</p>
+        <a href="index.html" class="button primary">Explore The Collection</a>
+      </div>
+
+      <!-- Active Orders List -->
+      <div id="ordersListContainer" class="orders-list-grid">
+        <!-- Rendered by orders.js -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="landing.html">
+          <span class="brand-mark">B</span>
+          <span>BRICK<span>BY</span>BRICK</span>
+        </a>
+        <p>Collectible builds for curious hands and happy shelves.</p>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <a href="landing.html">Home</a>
+        <a href="index.html">Product</a>
+        <a href="landing.html#features">Features</a>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <a href="index.html#shipping">Shipping &amp; returns</a>
+        <a href="index.html#care">Care instructions</a>
+        <a href="mailto:hello@brickbybrick.ph">Contact us</a>
+      </div>
+      <div>
+        <h3>Build tips in your inbox</h3>
+        <form id="signupForm" novalidate>
+          <label class="sr-only" for="signupEmail">Email address</label>
+          <input id="signupEmail" type="email" placeholder="you@email.com" required>
+          <button class="button dark" type="submit">Sign up</button>
+        </form>
+        <p id="signupMsg" class="form-message" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="copyright">© 2026 BrickByBrick. Build your world, brick by brick.</p>
+  </footer>
+
+  <script src="products.js?v=2"></script>
+  <script src="auth.js?v=2"></script>
+  <script src="cart.js?v=2"></script>
+  <script src="orders.js?v=2"></script>
+</body>
+</html>

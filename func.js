@@ -1,36 +1,214 @@
-const CART_KEY='brickbybrick_cart_count';
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-function cartCount(){return Number(localStorage.getItem(CART_KEY)||0)}
-function renderCart(){const n=cartCount();const el=$('#cartCount');if(el)el.textContent=n;const btn=$('.cart');if(btn)btn.setAttribute('aria-label','Cart, '+n+' items')}
-const cartButton=$('.cart');
-if(cartButton){
-  cartButton.setAttribute('aria-expanded','false');
-  cartButton.setAttribute('aria-controls','cartDrawer');
-  document.body.insertAdjacentHTML('beforeend','<aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-labelledby="cartTitle" role="dialog"><div class="cart-drawer-head"><h2 id="cartTitle">Your cart</h2><button class="cart-close" id="cartClose" type="button" aria-label="Close cart">×</button></div><p class="cart-copy" id="cartCopy"></p><button class="button primary cart-checkout" id="checkoutBtn" type="button">Checkout</button><p class="checkout-message" id="checkoutMessage" role="status" aria-live="polite"></p></aside>');
-  const drawer=$('#cartDrawer'),close=$('#cartClose'),copy=$('#cartCopy'),checkout=$('#checkoutBtn'),message=$('#checkoutMessage');
-  function renderDrawer(){const n=cartCount();copy.textContent=n+' item'+(n===1?'':'s')+' ready for checkout.';if(!n)copy.textContent='Your cart is empty.';checkout.disabled=!n}
-  function openCart(){renderDrawer();drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');cartButton.setAttribute('aria-expanded','true');close.focus()}
-  function closeCart(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');cartButton.setAttribute('aria-expanded','false');cartButton.focus()}
-  cartButton.addEventListener('click',openCart);close.addEventListener('click',closeCart);drawer.addEventListener('click',e=>{if(e.target===drawer)closeCart()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('open'))closeCart()});
-  checkout.addEventListener('click',()=>{localStorage.setItem(CART_KEY,'0');renderCart();renderDrawer();message.textContent='Checkout successful! Your demo order is confirmed.'});
+/**
+ * BrickByBrick - UI Interactions & Product Showcase
+ */
+
+// Mobile Navigation Toggle
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen);
+    menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  });
 }
-renderCart();window.addEventListener('storage',renderCart);
-const menu=$('#menuToggle'),nav=$('#navLinks');
-if(menu)menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',open);menu.setAttribute('aria-label',open?'Close menu':'Open menu')});
-$$('.nav-links a').forEach(a=>a.addEventListener('click',()=>{nav?.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
-const image=$('#galleryImage');
-const titleEl=$('#productTitle'),crumbEl=$('#breadcrumbProduct'),chosen=$('#variantChosen'),variantList=$('#variantList');
-const nameOverrides={hellokitty:'Hello Kitty',mickeymouse:'Mickey Mouse',minniemouse:'Minnie Mouse',cinnamonroll:'Cinnamoroll',pochaco:'Pochaco'};
-function productName(src){const base=src.split('/').pop().replace(/\.png$/i,'');return nameOverrides[base]||base.charAt(0).toUpperCase()+base.slice(1)}
-function setImage(src,alt){if(!image)return;const name=productName(src),label=name+' Display Set';image.src=src;image.alt=alt||name+' pixel-art collectible brick figure';if(titleEl)titleEl.textContent=label;if(crumbEl)crumbEl.textContent=label;document.title=label+' — BrickByBrick';if(chosen)chosen.textContent=name;$$('.thumb').forEach(t=>t.classList.toggle('selected',t.dataset.image===src));$$('.variant').forEach(v=>{const active=v.dataset.image===src;v.classList.toggle('active',active);v.setAttribute('aria-pressed',active?'true':'false')})}
-$$('.thumb').forEach(t=>t.addEventListener('click',()=>setImage(t.dataset.image,t.dataset.alt)));
-if(variantList){$$('.thumb').forEach(t=>{const name=productName(t.dataset.image),button=document.createElement('button');button.className='variant';button.type='button';button.dataset.name=name;button.dataset.image=t.dataset.image;button.setAttribute('aria-pressed',t.classList.contains('selected')?'true':'false');button.textContent=name;variantList.appendChild(button)});}
-const currentPrice=$('.price-row>strong'),originalPrice=$('.price-row del'),discountBadge=$('#discountBadge');
-if(currentPrice&&originalPrice&&discountBadge){const current=Number(currentPrice.textContent.replace(/[^\d]/g,'')),original=Number(originalPrice.textContent.replace(/[^\d]/g,''));if(original>current)discountBadge.textContent='SAVE '+Math.round((1-current/original)*100)+'%'}
-$$('.variant').forEach(v=>v.addEventListener('click',()=>setImage(v.dataset.image,v.dataset.name+' pixel-art collectible brick figure')));
-let qty=1;const qtyEl=$('#qtyValue'),down=$('#stepDown'),up=$('#stepUp');
-function renderQty(){if(qtyEl)qtyEl.textContent=qty;if(down)down.disabled=qty<=1;if(up)up.disabled=qty>=12}if(down)down.addEventListener('click',()=>{if(qty>1){qty--;renderQty()}});if(up)up.addEventListener('click',()=>{if(qty<12){qty++;renderQty()}});renderQty();
-let timer;function toast(msg){const t=$('#purchaseToast');if(!t)return;t.textContent=msg;clearTimeout(timer);timer=setTimeout(()=>t.textContent='',2800)}
-const add=$('#addToCartBtn');if(add)add.addEventListener('click',()=>{localStorage.setItem(CART_KEY,String(cartCount()+qty));renderCart();toast('Added to cart!')});const buy=$('#buyNowBtn');if(buy)buy.addEventListener('click',()=>{localStorage.setItem(CART_KEY,String(cartCount()+qty));renderCart();toast('Checkout successful! Your demo order is confirmed.')});
-$$('.accordion-trigger').forEach(trigger=>trigger.addEventListener('click',()=>{const panel=document.getElementById(trigger.getAttribute('aria-controls')),open=trigger.getAttribute('aria-expanded')==='true';$$('.accordion-trigger').forEach(t=>{t.setAttribute('aria-expanded','false');const p=document.getElementById(t.getAttribute('aria-controls'));if(p)p.style.maxHeight=null});if(!open){trigger.setAttribute('aria-expanded','true');panel.style.maxHeight=panel.scrollHeight+'px'}}));
-const form=$('#signupForm');if(form)form.addEventListener('submit',e=>{e.preventDefault();const input=$('#signupEmail'),msg=$('#signupMsg');if(input.checkValidity()){msg.textContent="You're on the list!";input.value=''}else{msg.textContent='Enter a valid email address.';input.focus()}});
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (navLinks) navLinks.classList.remove('open');
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// Product Gallery & Variant Selection
+const galleryImage = document.getElementById('galleryImage');
+const titleEl = document.getElementById('productTitle');
+const crumbEl = document.getElementById('breadcrumbProduct');
+const chosenEl = document.getElementById('variantChosen');
+const variantList = document.getElementById('variantList');
+const priceEl = document.querySelector('.price-row strong');
+const delPriceEl = document.querySelector('.price-row del');
+const discountBadge = document.getElementById('discountBadge');
+const stockEl = document.querySelector('.stock');
+
+let currentProductId = 'kuromi';
+
+function extractProductId(src) {
+  if (!src) return 'kuromi';
+  return src.split('/').pop().replace(/\.png$/i, '').toLowerCase();
+}
+
+function selectProduct(productId, customAlt) {
+  const cleanId = extractProductId(productId);
+  const product = (typeof getProductById === 'function' && getProductById(cleanId)) || {
+    id: cleanId,
+    name: cleanId.charAt(0).toUpperCase() + cleanId.slice(1) + ' Display Set',
+    character: cleanId.charAt(0).toUpperCase() + cleanId.slice(1),
+    price: 899,
+    originalPrice: 1099,
+    stock: 12,
+    image: `images/${cleanId}.png`
+  };
+
+  currentProductId = product.id;
+
+  if (galleryImage) {
+    galleryImage.src = product.image;
+    galleryImage.alt = customAlt || `${product.character} pixel-art collectible brick figure`;
+  }
+
+  const titleText = product.name || `${product.character} Display Set`;
+  if (titleEl) titleEl.textContent = titleText;
+  if (crumbEl) crumbEl.textContent = titleText;
+  if (chosenEl) chosenEl.textContent = product.character;
+  document.title = `${titleText} — BrickByBrick`;
+
+  if (priceEl && typeof formatPrice === 'function') {
+    priceEl.textContent = formatPrice(product.price);
+  }
+  if (delPriceEl && typeof formatPrice === 'function') {
+    delPriceEl.textContent = formatPrice(product.originalPrice || 1099);
+  }
+  if (discountBadge && product.originalPrice && product.price) {
+    const pct = Math.round((1 - product.price / product.originalPrice) * 100);
+    discountBadge.textContent = `SAVE ${pct}%`;
+  }
+  if (stockEl) {
+    stockEl.textContent = `${product.stock || 12} in stock`;
+  }
+
+  // Update thumbnail active states
+  document.querySelectorAll('.thumb').forEach(t => {
+    const isSelected = extractProductId(t.dataset.image) === currentProductId;
+    t.classList.toggle('selected', isSelected);
+  });
+
+  // Update variant button states
+  document.querySelectorAll('.variant').forEach(v => {
+    const isActive = extractProductId(v.dataset.image) === currentProductId;
+    v.classList.toggle('active', isActive);
+    v.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+}
+
+// Attach thumbnail click handlers
+document.querySelectorAll('.thumb').forEach(thumb => {
+  thumb.addEventListener('click', () => {
+    selectProduct(thumb.dataset.image, thumb.dataset.alt);
+  });
+});
+
+// Build variant buttons if variantList container exists
+if (variantList && variantList.children.length === 0) {
+  document.querySelectorAll('.thumb').forEach(t => {
+    const prodId = extractProductId(t.dataset.image);
+    const prod = (typeof getProductById === 'function' && getProductById(prodId));
+    const charName = prod ? prod.character : (t.dataset.alt || prodId).split(' ')[0];
+
+    const btn = document.createElement('button');
+    btn.className = 'variant';
+    btn.type = 'button';
+    btn.dataset.id = prodId;
+    btn.dataset.image = t.dataset.image;
+    btn.textContent = charName;
+    btn.setAttribute('aria-pressed', t.classList.contains('selected') ? 'true' : 'false');
+
+    btn.addEventListener('click', () => {
+      selectProduct(t.dataset.image, t.dataset.alt);
+    });
+
+    variantList.appendChild(btn);
+  });
+}
+
+// Quantity Stepper
+let currentQuantity = 1;
+const qtyValueEl = document.getElementById('qtyValue');
+const stepDownBtn = document.getElementById('stepDown');
+const stepUpBtn = document.getElementById('stepUp');
+
+function updateQuantityDisplay() {
+  if (qtyValueEl) qtyValueEl.textContent = currentQuantity;
+  if (stepDownBtn) stepDownBtn.disabled = currentQuantity <= 1;
+  if (stepUpBtn) stepUpBtn.disabled = currentQuantity >= 12;
+}
+
+if (stepDownBtn) {
+  stepDownBtn.addEventListener('click', () => {
+    if (currentQuantity > 1) {
+      currentQuantity--;
+      updateQuantityDisplay();
+    }
+  });
+}
+
+if (stepUpBtn) {
+  stepUpBtn.addEventListener('click', () => {
+    if (currentQuantity < 12) {
+      currentQuantity++;
+      updateQuantityDisplay();
+    }
+  });
+}
+
+updateQuantityDisplay();
+
+// Add to Cart Button
+const addToCartButton = document.getElementById('addToCartBtn');
+if (addToCartButton) {
+  addToCartButton.addEventListener('click', () => {
+    if (typeof addToCart === 'function') {
+      addToCart(currentProductId, currentQuantity);
+    }
+  });
+}
+
+// Buy Now Button
+const buyNowButton = document.getElementById('buyNowBtn');
+if (buyNowButton) {
+  buyNowButton.addEventListener('click', () => {
+    if (typeof buyNow === 'function') {
+      buyNow(currentProductId, currentQuantity);
+    }
+  });
+}
+
+// Accordion Behavior
+document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const panelId = trigger.getAttribute('aria-controls');
+    const panel = document.getElementById(panelId);
+    const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+    // Close other panels
+    document.querySelectorAll('.accordion-trigger').forEach(t => {
+      t.setAttribute('aria-expanded', 'false');
+      const p = document.getElementById(t.getAttribute('aria-controls'));
+      if (p) p.style.maxHeight = null;
+    });
+
+    if (!isExpanded && panel) {
+      trigger.setAttribute('aria-expanded', 'true');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+  });
+});
+
+// Newsletter Signup Form
+const signupForm = document.getElementById('signupForm');
+if (signupForm) {
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('signupEmail');
+    const msg = document.getElementById('signupMsg');
+
+    if (input && input.checkValidity()) {
+      if (msg) msg.textContent = "You're on the list! Welcome to the builder club.";
+      input.value = '';
+    } else if (msg) {
+      msg.textContent = 'Please enter a valid email address.';
+      if (input) input.focus();
+    }
+  });
+}
