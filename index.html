@@ -6,7 +6,7 @@
   <title>Kuromi Display Set — BrickByBrick</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="design.css">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://accounts.google.com/gsi/client?hl=en" async defer></script>
 </head>
 <style>
   :root {
@@ -53,11 +53,16 @@
       <nav class="nav-links" id="navLinks" aria-label="Primary">
         <a href="landing.html">Home</a>
         <a class="active" href="index.html">Product</a>
-        <a href="landing.html#features">Features</a>
+        <a href="features.html">Features</a>
       </nav>
       <div class="nav-actions">
-        <button class="cart" type="button" aria-label="Cart, 0 items">
-          ▱<b id="cartCount">0</b>
+        <button class="cart" type="button" aria-label="Open shopping cart" id="cartOpenBtn">
+          <svg class="cart-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <b id="cartCount">0</b>
         </button>
         <div id="navAuthSlot" class="nav-auth-slot"></div>
         <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
@@ -127,8 +132,8 @@
           <button class="thumb" type="button" data-image="images/pluto.png" data-alt="Pluto pixel-art collectible brick figure">
             <img src="images/pluto.png" alt="Pluto thumbnail">
           </button>
-          <button class="thumb" type="button" data-image="images/png.png" data-alt="Mystery pixel-art collectible brick figure">
-            <img src="images/png.png" alt="Mystery thumbnail">
+          <button class="thumb" type="button" data-image="images/png.png" data-alt="SpongeBob pixel-art collectible brick figure">
+            <img src="images/png.png" alt="SpongeBob thumbnail">
           </button>
           <button class="thumb" type="button" data-image="images/pochaco.png" data-alt="Pochacco pixel-art collectible brick figure">
             <img src="images/pochaco.png" alt="Pochacco thumbnail">
@@ -222,38 +227,38 @@
     <div class="stud-divider" aria-hidden="true">
       <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
     </div>
-    <section class="container specs-section">
-      <p class="kicker">DETAILS</p>
-      <h2>Specifications</h2>
-      <div class="table-wrap">
-        <table>
-          <tbody>
-            <tr>
-              <th>Piece count</th>
-              <td>600</td>
-            </tr>
-            <tr>
-              <th>Dimensions</th>
-              <td>8 × 6 × 5 in (built)</td>
-            </tr>
-            <tr>
-              <th>Model number</th>
-              <td>BB-SK-600</td>
-            </tr>
-            <tr>
-              <th>Age rating</th>
-              <td>12+</td>
-            </tr>
-            <tr>
-              <th>Assembly type</th>
-              <td>Snap-fit, no glue</td>
-            </tr>
-            <tr>
-              <th>Collection</th>
-              <td>Spark Collection</td>
-            </tr>
-          </tbody>
-        </table>
+    <section class="specs-section" id="specifications">
+      <div class="container specs-container">
+        <div class="specs-header">
+          <p class="kicker">DETAILS</p>
+          <h2>Specifications</h2>
+        </div>
+        <div class="specs-card">
+          <div class="spec-row">
+            <span class="spec-label">Piece count</span>
+            <span class="spec-value">600</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Dimensions</span>
+            <span class="spec-value">8 × 6 × 5 in (built)</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Model number</span>
+            <span class="spec-value">BB-SK-600</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Age rating</span>
+            <span class="spec-value">12+</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Assembly type</span>
+            <span class="spec-value">Snap-fit, no glue</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Collection</span>
+            <span class="spec-value">Spark Collection</span>
+          </div>
+        </div>
       </div>
     </section>
     <section class="box-section">
@@ -324,7 +329,7 @@
         <h3>Shop</h3>
         <a href="landing.html">Home</a>
         <a href="index.html">Product</a>
-        <a href="landing.html#features">Features</a>
+        <a href="features.html">Features</a>
       </div>
       <div>
         <h3>Support</h3>

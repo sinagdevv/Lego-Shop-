@@ -172,7 +172,8 @@ function renderGoogleSignInElements() {
         type: 'standard',
         shape: 'rectangular',
         text: 'signin_with',
-        logo_alignment: 'left'
+        logo_alignment: 'left',
+        locale: 'en'
       });
     } catch (e) {
       console.warn('Could not render GIS nav button:', e);
@@ -188,7 +189,8 @@ function renderGoogleSignInElements() {
         type: 'standard',
         shape: 'rectangular',
         text: 'continue_with',
-        logo_alignment: 'left'
+        logo_alignment: 'left',
+        locale: 'en'
       });
     } catch (e) {
       console.warn('Could not render GIS modal button:', e);
@@ -261,7 +263,11 @@ function renderAuthUI() {
     const isConfigured = checkGoogleAuthConfigured();
 
     if (isConfigured) {
-      authContainer.innerHTML = `<div id="gsiNavBtn" class="gsi-slot"></div>`;
+      authContainer.innerHTML = `
+        <div class="nav-gsi-wrapper" id="navGsiWrapper">
+          <div id="gsiNavBtn" class="gsi-slot"></div>
+        </div>
+      `;
       renderGoogleSignInElements();
     } else {
       authContainer.innerHTML = `

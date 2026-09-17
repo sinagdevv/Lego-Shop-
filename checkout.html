@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="design.css">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://accounts.google.com/gsi/client?hl=en" async defer></script>
 </head>
 <body data-page="checkout">
   <div class="promo">Free shipping, no minimum • Cash on Delivery available nationwide</div>
@@ -23,11 +23,15 @@
       <nav class="nav-links" id="navLinks" aria-label="Primary">
         <a href="landing.html">Home</a>
         <a href="index.html">Product</a>
-        <a href="landing.html#features">Features</a>
+        <a href="features.html">Features</a>
       </nav>
       <div class="nav-actions">
-        <button class="cart" type="button" aria-label="Cart, 0 items">
-          <span aria-hidden="true">▱</span>
+        <button class="cart" type="button" aria-label="Open shopping cart" id="cartOpenBtn">
+          <svg class="cart-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
           <b id="cartCount">0</b>
         </button>
         <div id="navAuthSlot" class="nav-auth-slot"></div>
@@ -222,7 +226,7 @@
         <h3>Shop</h3>
         <a href="landing.html">Home</a>
         <a href="index.html">Product</a>
-        <a href="landing.html#features">Features</a>
+        <a href="features.html">Features</a>
       </div>
       <div>
         <h3>Support</h3>

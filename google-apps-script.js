@@ -58,6 +58,8 @@ const PRODUCTS = {
   pochaco: 899,
   pochacco: 899,
   psyduck: 899,
+  spongebob: 899,
+  mystery: 899,
   squidward: 899,
   stitch: 899
 };

@@ -31,6 +31,7 @@ const priceEl = document.querySelector('.price-row strong');
 const delPriceEl = document.querySelector('.price-row del');
 const discountBadge = document.getElementById('discountBadge');
 const stockEl = document.querySelector('.stock');
+const leadEl = document.querySelector('.lead');
 
 let currentProductId = 'kuromi';
 
@@ -62,6 +63,7 @@ function selectProduct(productId, customAlt) {
   if (titleEl) titleEl.textContent = titleText;
   if (crumbEl) crumbEl.textContent = titleText;
   if (chosenEl) chosenEl.textContent = product.character;
+  if (leadEl && product.description) leadEl.textContent = product.description;
   document.title = `${titleText} — BrickByBrick`;
 
   if (priceEl && typeof formatPrice === 'function') {

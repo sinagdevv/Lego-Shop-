@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore BrickByBrick features: snap-fit assembly, gift-ready packaging, Cash on Delivery, Google Sign-In, and automated email order updates.">
+  <title>Features — BrickByBrick</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design.css">
+  <script src="https://accounts.google.com/gsi/client?hl=en" async defer></script>
+</head>
+<body data-page="features">
+  <div class="promo">Free shipping, no minimum • Cash on Delivery nationwide</div>
+
+  <!-- Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="landing.html" aria-label="BrickByBrick home">
+        <span class="brand-mark">B</span>
+        <span>BRICK<span>BY</span>BRICK</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="landing.html">Home</a>
+        <a href="index.html">Product</a>
+        <a class="active" href="features.html">Features</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="cart" type="button" aria-label="Open shopping cart" id="cartOpenBtn">
+          <svg class="cart-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <b id="cartCount">0</b>
+        </button>
+        <div id="navAuthSlot" class="nav-auth-slot"></div>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- SECTION 1 - HERO -->
+    <section class="features-hero" id="featuresHero">
+      <div class="container features-hero-grid">
+        <div class="features-hero-copy">
+          <p class="kicker light">WHY BRICKBYBRICK?</p>
+          <h1>GOOD PIECES.<br><span>GOOD ENERGY.</span></h1>
+          <p class="hero-subtext">Collectible character builds designed for fun assembly, display-worthy results, simple checkout, and easy order tracking.</p>
+          <div class="features-hero-actions">
+            <a class="button primary" href="index.html">Shop the Collection →</a>
+            <a class="button outline-light" href="#reviews">See Customer Reviews ↓</a>
+          </div>
+          <div class="features-hero-stats">
+            <div>
+              <strong>600</strong>
+              <span>Pieces per set</span>
+            </div>
+            <div>
+              <strong>20+</strong>
+              <span>Characters</span>
+            </div>
+            <div>
+              <strong>100%</strong>
+              <span>Free shipping</span>
+            </div>
+          </div>
+        </div>
+        <div class="features-hero-art pixel-frame">
+          <span class="hero-label">DESK DISPLAY</span>
+          <img src="images/kuromi.png" alt="Kuromi pixel-art collectible display set">
+          <span class="hero-stud s1"></span>
+          <span class="hero-stud s2"></span>
+          <span class="hero-stud s3"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 - CORE PRODUCT FEATURES -->
+    <section class="core-features-section" id="coreFeatures">
+      <div class="container">
+        <div class="section-title-wrap text-center">
+          <p class="kicker">BUILT WITH PRECISION</p>
+          <h2>Four reasons to build with us</h2>
+        </div>
+        <div class="core-features-grid">
+          <article class="core-feature-card pixel-frame">
+            <span class="core-feature-icon" aria-hidden="true">⊞</span>
+            <h3>1. SNAP-FIT ASSEMBLY</h3>
+            <p>Precision-molded pieces click firmly into place for a satisfying build without glue.</p>
+          </article>
+          <article class="core-feature-card pixel-frame">
+            <span class="core-feature-icon" aria-hidden="true">✦</span>
+            <h3>2. GIFT-READY PACKAGING</h3>
+            <p>Bright collectible packaging designed for gifting, displaying, and collecting.</p>
+          </article>
+          <article class="core-feature-card pixel-frame">
+            <span class="core-feature-icon" aria-hidden="true">▤</span>
+            <h3>3. NUMBERED BUILD STAGES</h3>
+            <p>Clear numbered stages help keep every build simple and easy to follow.</p>
+          </article>
+          <article class="core-feature-card pixel-frame">
+            <span class="core-feature-icon" aria-hidden="true">→</span>
+            <h3>4. FREE SHIPPING</h3>
+            <p>Every BrickByBrick order includes free nationwide shipping with no minimum spend.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 - SHOPPING EXPERIENCE -->
+    <section class="shopping-exp-section" id="experience">
+      <div class="container">
+        <div class="section-title-wrap text-center">
+          <p class="kicker light">SEAMLESS COMMERCE</p>
+          <h2>MORE THAN JUST THE BUILD.</h2>
+        </div>
+        <div class="shopping-cards-grid">
+          <article class="shopping-card">
+            <div class="shopping-card-icon" aria-hidden="true">🚚</div>
+            <h3>Free Shipping</h3>
+            <p>100% free nationwide delivery across the Philippines with zero minimum order.</p>
+            <span class="shopping-card-tag">No minimum spend</span>
+          </article>
+          <article class="shopping-card">
+            <div class="shopping-card-icon" aria-hidden="true">💵</div>
+            <h3>Cash on Delivery</h3>
+            <p>Pay conveniently in cash at your doorstep when your package arrives safely.</p>
+            <span class="shopping-card-tag">Pay upon arrival</span>
+          </article>
+          <article class="shopping-card">
+            <div class="shopping-card-icon" aria-hidden="true">🔒</div>
+            <h3>Google Sign-In</h3>
+            <p>Fast, frictionless checkout using your Google account with zero passwords stored.</p>
+            <span class="shopping-card-tag">1-tap security</span>
+          </article>
+          <article class="shopping-card">
+            <div class="shopping-card-icon" aria-hidden="true">✉️</div>
+            <h3>Order Status Emails</h3>
+            <p>Automated inbox updates dispatched whenever your build status changes.</p>
+            <span class="shopping-card-tag">Live inbox alerts</span>
+          </article>
+          <article class="shopping-card">
+            <div class="shopping-card-icon" aria-hidden="true">🏆</div>
+            <h3>Display Quality</h3>
+            <p>600 snap-fit brick pieces with an included display base for proud tabletop exhibition.</p>
+            <span class="shopping-card-tag">Collector grade</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4 - HOW IT WORKS -->
+    <section class="how-process-section" id="howItWorks">
+      <div class="container">
+        <div class="section-title-wrap text-center">
+          <p class="kicker">SIMPLE &amp; TRANSPARENT</p>
+          <h2>FROM CHARACTER TO DOORSTEP.</h2>
+        </div>
+        <div class="process-steps-grid">
+          <div class="process-step-card pixel-frame">
+            <span class="process-step-num">STEP 01</span>
+            <h3>Choose your character</h3>
+            <p>Browse characters including:</p>
+            <div class="character-pill-list">
+              <span>Kuromi</span>
+              <span>Stitch</span>
+              <span>SpongeBob</span>
+              <span>Mario</span>
+              <span>Pikachu</span>
+              <span>Hello Kitty</span>
+              <span>and more.</span>
+            </div>
+          </div>
+          <div class="process-step-card pixel-frame">
+            <span class="process-step-num">STEP 02</span>
+            <h3>Place your order</h3>
+            <p>Sign in securely with Google, add your delivery details, and choose Cash on Delivery.</p>
+            <div class="process-highlight-box">
+              <span class="hl-check">✓</span> 1-Tap Google Sign-In<br>
+              <span class="hl-check">✓</span> Cash on Delivery nationwide<br>
+              <span class="hl-check">✓</span> Zero credit card needed
+            </div>
+          </div>
+          <div class="process-step-card pixel-frame">
+            <span class="process-step-num">STEP 03</span>
+            <h3>Track every update</h3>
+            <p>Customers automatically receive emails as your package moves through each milestone:</p>
+            <div class="status-timeline-wrap" aria-label="Order status milestones">
+              <div class="status-timeline-node active">
+                <span class="node-dot"></span>
+                <span class="node-label">Pending</span>
+              </div>
+              <div class="status-timeline-line"></div>
+              <div class="status-timeline-node">
+                <span class="node-dot"></span>
+                <span class="node-label">Order Confirmed</span>
+              </div>
+              <div class="status-timeline-line"></div>
+              <div class="status-timeline-node">
+                <span class="node-dot"></span>
+                <span class="node-label">Preparing</span>
+              </div>
+              <div class="status-timeline-line"></div>
+              <div class="status-timeline-node">
+                <span class="node-dot"></span>
+                <span class="node-label">Ready for Delivery</span>
+              </div>
+              <div class="status-timeline-line"></div>
+              <div class="status-timeline-node">
+                <span class="node-dot"></span>
+                <span class="node-label">On the Way</span>
+              </div>
+              <div class="status-timeline-line"></div>
+              <div class="status-timeline-node">
+                <span class="node-dot"></span>
+                <span class="node-label">Received</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 - CUSTOMER REVIEWS -->
+    <section class="reviews-section" id="reviews">
+      <div class="container">
+        <div class="section-title-wrap text-center">
+          <p class="kicker">BUILDER TESTIMONIALS</p>
+          <h2>LOVED BY BUILDERS.</h2>
+        </div>
+
+        <div class="review-summary-card pixel-frame">
+          <div class="summary-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <div class="summary-score"><strong>4.9</strong> / 5</div>
+          <p class="summary-count">Based on <strong>124 builder reviews</strong></p>
+          <span class="demo-feedback-label">Demo customer feedback</span>
+        </div>
+
+        <div class="testimonials-grid">
+          <!-- CARD 1 -->
+          <article class="testimonial-card">
+            <div>
+              <div class="testimonial-header">
+                <div class="testimonial-avatar" aria-hidden="true">M</div>
+                <div>
+                  <strong class="testimonial-name">Mia R.</strong>
+                  <span class="testimonial-rating" aria-label="5 stars">★★★★★</span>
+                </div>
+              </div>
+              <p class="testimonial-quote">“The pieces clicked together really nicely and the finished Kuromi build looks so good on my desk.”</p>
+            </div>
+            <div class="testimonial-product">
+              <img src="images/kuromi.png" alt="Kuromi Display Set" class="testimonial-thumb">
+              <span>Kuromi Display Set</span>
+            </div>
+          </article>
+
+          <!-- CARD 2 -->
+          <article class="testimonial-card">
+            <div>
+              <div class="testimonial-header">
+                <div class="testimonial-avatar" aria-hidden="true">J</div>
+                <div>
+                  <strong class="testimonial-name">Josh T.</strong>
+                  <span class="testimonial-rating" aria-label="5 stars">★★★★★</span>
+                </div>
+              </div>
+              <p class="testimonial-quote">“Bought Stitch as a gift and the packaging made it feel much more premium than I expected.”</p>
+            </div>
+            <div class="testimonial-product">
+              <img src="images/stitch.png" alt="Stitch Display Set" class="testimonial-thumb">
+              <span>Stitch Display Set</span>
+            </div>
+          </article>
+
+          <!-- CARD 3 -->
+          <article class="testimonial-card">
+            <div>
+              <div class="testimonial-header">
+                <div class="testimonial-avatar" aria-hidden="true">A</div>
+                <div>
+                  <strong class="testimonial-name">Andrea L.</strong>
+                  <span class="testimonial-rating" aria-label="5 stars">★★★★★</span>
+                </div>
+              </div>
+              <p class="testimonial-quote">“SpongeBob was fun to assemble and it honestly made me want to collect more characters.”</p>
+            </div>
+            <div class="testimonial-product">
+              <img src="images/png.png" alt="SpongeBob Display Set" class="testimonial-thumb">
+              <span>SpongeBob Display Set</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6 - TRUST STRIP -->
+    <section class="trust-strip-section" id="trustStrip">
+      <div class="container trust-strip-inner">
+        <div class="trust-strip-item">
+          <span class="trust-strip-icon" aria-hidden="true">🔒</span>
+          <strong>SECURE GOOGLE SIGN-IN</strong>
+        </div>
+        <div class="trust-strip-divider" aria-hidden="true">♦</div>
+        <div class="trust-strip-item">
+          <span class="trust-strip-icon" aria-hidden="true">🚚</span>
+          <strong>FREE SHIPPING</strong>
+        </div>
+        <div class="trust-strip-divider" aria-hidden="true">♦</div>
+        <div class="trust-strip-item">
+          <span class="trust-strip-icon" aria-hidden="true">💵</span>
+          <strong>CASH ON DELIVERY</strong>
+        </div>
+        <div class="trust-strip-divider" aria-hidden="true">♦</div>
+        <div class="trust-strip-item">
+          <span class="trust-strip-icon" aria-hidden="true">✉️</span>
+          <strong>AUTOMATED ORDER UPDATES</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7 - FAQ (ACCORDION) -->
+    <section class="faq-accordion-section" id="faq">
+      <div class="container">
+        <div class="section-title-wrap text-center">
+          <p class="kicker light">NEED HELP?</p>
+          <h2>QUICK QUESTIONS.</h2>
+        </div>
+        <div class="accordion-container">
+          <div class="accordion-item">
+            <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="faq1">
+              <span>Is shipping really free?</span>
+              <span class="accordion-symbol">+</span>
+            </button>
+            <div class="accordion-panel" id="faq1">
+              <p>Yes. BrickByBrick currently offers free shipping with no minimum order.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="faq2">
+              <span>How do I pay?</span>
+              <span class="accordion-symbol">+</span>
+            </button>
+            <div class="accordion-panel" id="faq2">
+              <p>The current checkout supports Cash on Delivery.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="faq3">
+              <span>Will I receive order updates?</span>
+              <span class="accordion-symbol">+</span>
+            </button>
+            <div class="accordion-panel" id="faq3">
+              <p>Yes. Customers automatically receive email notifications as their order moves from Pending through delivery.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="faq4">
+              <span>Do I need an account?</span>
+              <span class="accordion-symbol">+</span>
+            </button>
+            <div class="accordion-panel" id="faq4">
+              <p>You can browse freely, but Google Sign-In is required during checkout and to view your orders.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8 - FINAL CTA -->
+    <section class="cta upgraded-cta">
+      <div class="container cta-inner-upgraded">
+        <div class="cta-content">
+          <p class="kicker light">START BUILDING</p>
+          <h2>READY TO BUILD YOUR NEXT FAVORITE?</h2>
+          <p class="cta-sub">Pick your character and start building.</p>
+        </div>
+        <div class="cta-actions-group">
+          <a class="button light-button cta-btn" href="index.html">SHOP THE COLLECTION →</a>
+          <a class="button outline-light cta-btn" href="orders.html">VIEW MY ORDERS</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="landing.html">
+          <span class="brand-mark">B</span>
+          <span>BRICK<span>BY</span>BRICK</span>
+        </a>
+        <p>Collectible builds for curious hands and happy shelves.</p>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <a href="landing.html">Home</a>
+        <a href="index.html">Product</a>
+        <a href="features.html">Features</a>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <a href="index.html#shipping">Shipping &amp; returns</a>
+        <a href="index.html#care">Care instructions</a>
+        <a href="mailto:hello@brickbybrick.ph">Contact us</a>
+      </div>
+      <div>
+        <h3>Build tips in your inbox</h3>
+        <form id="signupForm" novalidate>
+          <label class="sr-only" for="signupEmail">Email address</label>
+          <input id="signupEmail" type="email" placeholder="you@email.com" required>
+          <button class="button dark" type="submit">Sign up</button>
+        </form>
+        <p id="signupMsg" class="form-message" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="copyright">© 2026 BrickByBrick. Build your world, brick by brick.</p>
+  </footer>
+
+  <script src="products.js?v=2"></script>
+  <script src="auth.js?v=2"></script>
+  <script src="cart.js?v=2"></script>
+  <script>
+    // Accordion interactive behavior
+    document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const panelId = trigger.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Close other panels
+        document.querySelectorAll('.accordion-trigger').forEach(t => {
+          t.setAttribute('aria-expanded', 'false');
+          const p = document.getElementById(t.getAttribute('aria-controls'));
+          if (p) p.style.maxHeight = null;
+        });
+
+        if (!isExpanded && panel) {
+          trigger.setAttribute('aria-expanded', 'true');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Mobile nav toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('open');
+        menuToggle.setAttribute('aria-expanded', isOpen);
+      });
+    }
+
+    // Newsletter Signup Form
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+      signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('signupEmail');
+        const msg = document.getElementById('signupMsg');
+        if (input && input.checkValidity()) {
+          if (msg) msg.textContent = "You're on the list! Welcome to the builder club.";
+          input.value = '';
+        } else if (msg) {
+          msg.textContent = 'Please enter a valid email address.';
+          if (input) input.focus();
+        }
+      });
+    }
+  </script>
+</body>
+</html>

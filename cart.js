@@ -159,7 +159,7 @@ function renderCartBadges() {
 
   const cartButtons = document.querySelectorAll('.cart');
   cartButtons.forEach(btn => {
-    btn.setAttribute('aria-label', `Cart, ${count} items`);
+    btn.setAttribute('aria-label', count > 0 ? `Open shopping cart (${count} items)` : 'Open shopping cart');
   });
 }
 

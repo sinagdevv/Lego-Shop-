@@ -229,15 +229,39 @@ window.BRICKBYBRICK_PRODUCTS = {
   },
   png: {
     id: "png",
-    name: "Spark Mystery Build",
-    character: "Mystery",
+    name: "SpongeBob Display Set",
+    character: "SpongeBob",
     price: 899,
     originalPrice: 1099,
     image: "images/png.png",
     stock: 7,
     pieces: 600,
     model: "BB-SK-616",
-    description: "A special edition mystery build for builders who love surprises and rare figures."
+    description: "The optimistic, pineapple-dwelling sea sponge of Bikini Bottom in his iconic square pants, red tie, and joyful grin."
+  },
+  spongebob: {
+    id: "spongebob",
+    name: "SpongeBob Display Set",
+    character: "SpongeBob",
+    price: 899,
+    originalPrice: 1099,
+    image: "images/png.png",
+    stock: 7,
+    pieces: 600,
+    model: "BB-SK-616",
+    description: "The optimistic, pineapple-dwelling sea sponge of Bikini Bottom in his iconic square pants, red tie, and joyful grin."
+  },
+  mystery: {
+    id: "mystery",
+    name: "SpongeBob Display Set",
+    character: "SpongeBob",
+    price: 899,
+    originalPrice: 1099,
+    image: "images/png.png",
+    stock: 7,
+    pieces: 600,
+    model: "BB-SK-616",
+    description: "The optimistic, pineapple-dwelling sea sponge of Bikini Bottom in his iconic square pants, red tie, and joyful grin."
   },
   pochaco: {
     id: "pochaco",
